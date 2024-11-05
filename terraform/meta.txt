@@ -1,0 +1,10 @@
+#cloud-config
+users:
+  - name: user
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    enable-oslogin: true
+    serial-port-enable: 1
+    ssh-authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPyyg9cov+4ldXF8elFGZXsAZ+Zkve/GVK6QNBLexXnx user@avgur

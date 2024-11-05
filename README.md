@@ -12,6 +12,9 @@
 ### Terraform
 - [Инфраструктура](#terra)
     - [Сеть](#net)
+    - [Группы безопасности](#group)
+    - [Load Balancer](#balancer)
+    - [Резервное копирование](#snapshot)
 ### Ansible
 
 
@@ -117,9 +120,85 @@ internal_ip_address_zabbix = "10.0.4.5"
 
 После завершения работы **terraform** проверяем в web консоли YC созданную инфраструктуру.Сервера WEB-1 и WEB-2 созданы в разных зонах.
 
-![VM]()  
+![VM](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/VM_status.PNG)  
 
 ### <a id="net">Сеть</a>  
 
+ **VPC и subnet**
+
+Создаем одну VPC, которая будет включать публичные и приватные подсети, а также таблицу маршрутизации для обеспечения доступа к интернету для виртуальных машин, расположенных внутри сети и защищенных Бастионом, исполняющим роль шлюза к интернету.
+
+![maps_VPC](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/network_map.PNG)
+
+### <a id="group">Группы безопасности</a>
+
+Общий список групп безопасности
+
+![SG_ALL](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/list_SG.png)
+
+А также посмотрим на каждую группу бузоапсности по отдельности:
+
+**SG_LB**
+
+![sg_L7B](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/SG_BALANCER.png)
+
+**SG_internal** с разрешением любого трафика между ВМ кому присвоена данная SG
+
+![sg_internal](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/SG_INT_RULS.png)
+
+**SG_bastion** c с открытием только 22 порта для работы SSH
+
+![sg_bastion](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/SG_BASTION.png)
+
+
+**SG_kibana** c открытым портом 5601 для доступа c интернета к Fronted Kibana
+
+![sg_kibana](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/SG_KIBANA.png)
+
+**SG_zabbix** с открытым портом 80 и 10051 для доступа с интернета к Fronted Zabbix и работы Zabbix agent
+
+![sg_zabbix](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/SG_ZABBIX.png)
+
+### <a id="balancer">Load Balancer</a>
+
+**Создаем Target Group**
+
+![target-group](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/target_group.png)
+
+**Создаем Backend Group**
+
+![backend-group](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/GROUP_BACK.png)
+
+**Создаем HTTP router**
+
+![http-router](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/HTTP_ROUTER.png)
+
+**Создаем Application load balancer**
+
+Для распределения трафика на ранее созданные веб-серверы указываем ранее созданный HTTP роутер, устанавливаем тип listener на auto и выбираем порт 80.
+
+![loadBalancer](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/APLICATION_LOAD_BALANCER.png)
+
+
+### <a id="snapshot">Резервное копирование</a>
+
+**snapshot**
+
+создаем в terraform блок с расписанием snapshots
+
+```
+resource "yandex_compute_snapshot_schedule" "default1" {
+  name = "default1"
+  description    = "Ежедневные снимки, хранятся 7 дней"
+
+    schedule_policy {
+    expression = "0 1 * * *"
+  }
+
+```
+
+Переходим в консоль YC и видим созданое расписание, по которому будут происходить обновления.
+
+![snap](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/SCHEDULER_SNAPSHOT.png)
 
 ## Ansible

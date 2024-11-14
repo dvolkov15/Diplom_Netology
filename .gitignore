@@ -3,3 +3,4 @@
 **/terraform/terraform.tfstate.backup
 **/scrin
 **/terraform/meta.txt
+**/terraform/.terraform.lock.hcl

@@ -202,3 +202,94 @@ resource "yandex_compute_snapshot_schedule" "default1" {
 ![snap](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/SCHEDULER_SNAPSHOT.png)
 
 ## Ansible
+
+Создадим файл inventory назовем host.ini, к WEB серверам будем обращаться по FQDN имени.
+
+```
+[all:vars]
+ansible_user=user
+ansible_ssh_private_key_file=/home/user/.ssh/id_ed25519
+ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q user@89.169.164.152"'
+
+[log]
+elastic_srv ansible_host=elastic.ru-central1.internal
+kibana_srv  ansible_host=kibana.ru-central1.internal
+
+[web]
+web-1 ansible_host=web1.ru-central1.internal
+web-2 ansible_host=web2.ru-central1.internal
+
+[mon]
+zabbix_srv ansible_host=zabbix.ru-central1.internal
+```
+
+Проверка достпуности хостов
+
+![ping_pong](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/ping_pong.png)
+
+Устанавливаем NGINX
+
+![install_nginx](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/nginx.png)
+
+Проверям его работу в браузере
+
+![nginx_web](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/Nginx_web.png)
+
+Сделаем несколько запросов в консоли YC и в логах балансировщика увидим, что меняется IP адрес backend
+
+![change_ip](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/change_ip_backand.png)
+
+
+## Мониторинг
+
+установка Zabbix
+
+![install_zabbix](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/install_zabbix.png)
+
+Проверим работу Zabbix в Web интерфейсе
+
+![zabbix_web](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/zabbix_1.png)
+
+Установка Zabbix-agent
+
+![install_zabbix_agent](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/install_zabbix_agent.png)
+
+Проверим статус zabbix agenta на двух web серверах
+
+![zabbix_agent_web1](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/status_zabbix_agent_web1.png)
+
+![zabbix_agent_web2](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/status_zabbix_agent_web2.png)
+
+Добавляем хосты используя FQDN имена в zabbix сервер и настраиваем дашборды
+
+![active_node](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/active_node_zabbix.png)
+
+И создадим дашборд на который выыедем утилизацию CPU RAM и Uptime
+
+![dashbord_zabbix](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/dashbord_zabbix.png)
+
+## ELK
+
+Теперь установим стек ELK начнем с elasticsearch
+
+![install_elasicsearch](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/install_elastic.png)
+
+Посмотрим статус сервиса elasticsearch
+
+![status_elasicsearch](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/status_elastic.png)
+
+Установим Kibana
+
+![install_kibana](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/install_kibana.png)
+
+Проверим статус Kibana
+
+![status_kibana](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/status_kibana.png)
+
+Установим Filebaet на оба web сервера
+
+![install_filebeat](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/install_filebeat.png)
+
+Проверим в WEB интерефейсе логи с двух web сервером
+
+![ifilebeat_log](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/log_elastic.png)

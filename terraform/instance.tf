@@ -13,7 +13,7 @@ resource "yandex_compute_instance" "web-1" {
   }
 
   boot_disk {
-    disk_id     = "${yandex_compute_disk.disk-web-1.id}"
+    disk_id     = "yandex_compute_disk.disk-web-1.id"
     }
 
   network_interface {
@@ -49,7 +49,7 @@ resource "yandex_compute_instance" "web-2" {
   }
 
   boot_disk {
-    disk_id     = "${yandex_compute_disk.disk-web-2.id}"
+    disk_id     = "yandex_compute_disk.disk-web-2.id"
     }
     
   network_interface {
@@ -86,7 +86,7 @@ resource "yandex_compute_instance" "bastion" {
   }
 
   boot_disk {
-    disk_id     = "${yandex_compute_disk.disk-bastion.id}"
+    disk_id     = "yandex_compute_disk.disk-bastion.id"
     }
 
   network_interface {
@@ -125,7 +125,7 @@ resource "yandex_compute_instance" "zabbix" {
   }
 
   boot_disk {
-    disk_id     = "${yandex_compute_disk.disk-zabbix.id}"
+    disk_id     = "yandex_compute_disk.disk-zabbix.id"
     }
 
   network_interface {
@@ -163,7 +163,7 @@ resource "yandex_compute_instance" "elastic" {
   }
 
   boot_disk {
-    disk_id     = "${yandex_compute_disk.disk-elastic.id}"
+    disk_id     = "yandex_compute_disk.disk-elastic.id"
     }
 
   network_interface {
@@ -200,7 +200,7 @@ resource "yandex_compute_instance" "kibana" {
   }
 
   boot_disk {
-    disk_id     = "${yandex_compute_disk.disk-kibana.id}"
+    disk_id     = "yandex_compute_disk.disk-kibana.id"
     }
 
   network_interface {

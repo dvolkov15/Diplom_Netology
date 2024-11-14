@@ -23,7 +23,7 @@ resource "yandex_compute_instance" "web-1" {
     ttl = 300
     }
     security_group_ids = [yandex_vpc_security_group.internal.id]
-    ip_address         = "10.10.1.3"
+    ip_address         = "10.0.1.3"
   }
 
   metadata = {
@@ -59,7 +59,7 @@ resource "yandex_compute_instance" "web-2" {
     ttl = 300
     }
     security_group_ids = [yandex_vpc_security_group.internal.id]
-    ip_address         = "10.10.2.3"
+    ip_address         = "10.0.2.3"
   }
 
   metadata = {
@@ -97,7 +97,7 @@ resource "yandex_compute_instance" "bastion" {
     }
     nat                = true
     security_group_ids = [yandex_vpc_security_group.internal.id, yandex_vpc_security_group.public-bastion.id]
-    ip_address         = "10.10.4.4"
+    ip_address         = "10.0.4.4"
   }
 
   metadata = {
@@ -136,7 +136,7 @@ resource "yandex_compute_instance" "zabbix" {
     }
     nat                = true
     security_group_ids = [yandex_vpc_security_group.internal.id, yandex_vpc_security_group.public-zabbix.id]
-    ip_address         = "10.10.4.5"
+    ip_address         = "10.0.4.5"
   }
 
   metadata = {
@@ -173,7 +173,7 @@ resource "yandex_compute_instance" "elastic" {
     ttl = 300
     }
     security_group_ids = [yandex_vpc_security_group.internal.id]
-    ip_address         = "10.10.3.4"
+    ip_address         = "10.0.3.3"
   }
 
   metadata = {
@@ -211,7 +211,7 @@ resource "yandex_compute_instance" "kibana" {
     }
     nat                = true
     security_group_ids = [yandex_vpc_security_group.internal.id, yandex_vpc_security_group.public-kibana.id]
-    ip_address         = "10.10.4.3"
+    ip_address         = "10.0.4.6"
   }
 
   metadata = {

@@ -17,7 +17,7 @@ resource "yandex_vpc_subnet" "subnet_web-1" {
   name           = "subnet_web-1"
   zone           = "ru-central1-a"
   network_id     = yandex_vpc_network.dipnet.id
-  v4_cidr_blocks = ["10.10.1.0/28"]
+  v4_cidr_blocks = ["10.0.1.0/28"]
   route_table_id = yandex_vpc_route_table.inner-to-nat.id
 }
 
@@ -25,7 +25,7 @@ resource "yandex_vpc_subnet" "subnet_web-2" {
   name           = "subnet_web-2"
   zone           = "ru-central1-b"
   network_id     = yandex_vpc_network.dipnet.id
-  v4_cidr_blocks = ["10.10.2.0/28"]
+  v4_cidr_blocks = ["10.0.2.0/28"]
   route_table_id = yandex_vpc_route_table.inner-to-nat.id
 }
 
@@ -33,7 +33,7 @@ resource "yandex_vpc_subnet" "private" {
   name           = "internal-subnet"
   zone           = "ru-central1-b"
   network_id     = yandex_vpc_network.dipnet.id
-  v4_cidr_blocks = ["10.10.3.0/27"]
+  v4_cidr_blocks = ["10.0.3.0/27"]
   route_table_id = yandex_vpc_route_table.inner-to-nat.id
 }
 
@@ -41,7 +41,7 @@ resource "yandex_vpc_subnet" "public" {
   name           = "public-subnet"
   zone           = "ru-central1-b"
   network_id     = yandex_vpc_network.dipnet.id
-  v4_cidr_blocks = ["10.10.4.0/27"]
+  v4_cidr_blocks = ["10.0.4.0/27"]
 }
 
 

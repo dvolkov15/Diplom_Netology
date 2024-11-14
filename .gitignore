@@ -1,6 +1,5 @@
 **/terraform/key.json
 **/terraform/terraform.tfstate
 **/terraform/terraform.tfstate.backup
-**/scrin
 **/terraform/meta.txt
 **/terraform/.terraform.lock.hcl

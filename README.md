@@ -16,7 +16,18 @@
     - [Load Balancer](#balancer)
     - [Резервное копирование](#snapshot)
 ### Ansible
+- [Установка и настройка ansible](#cfg)
+- [NGINX](#web)
+- [Мониторинг](#zabbix)
+- Логи
+    -  [Установка Elasticsearch](#elastic)
+    -  [Установка Kibana](#kibana)
+    -  [Установка Filebeat](#filebeat)
 
+**ссылки на ресурсы**  
+[Сайт](http://84.201.169.22/)  
+[Kibana](http://51.250.104.237:5601/)  
+[Zabbix](http://51.250.29.190/zabbix/)
 
 --- 
 
@@ -203,6 +214,8 @@ resource "yandex_compute_snapshot_schedule" "default1" {
 
 ## Ansible
 
+### <a id="cfg">Установка и настройка ansible</a>
+
 Создадим файл inventory назовем host.ini, к WEB серверам будем обращаться по FQDN имени.
 
 ```
@@ -227,22 +240,24 @@ zabbix_srv ansible_host=zabbix.ru-central1.internal
 
 ![ping_pong](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/ping_pong.png)
 
-Устанавливаем NGINX
+### <a id="web">Установка NGINX и загрузка сайта</a> 
+
+**Устанавливаем NGINX**
 
 ![install_nginx](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/nginx.png)
 
-Проверям его работу в браузере
+**Проверям его работу в браузере**
 
 ![nginx_web](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/Nginx_web.png)
 
-Сделаем несколько запросов в консоли YC и в логах балансировщика увидим, что меняется IP адрес backend
+**Сделаем несколько запросов в консоли YC и в логах балансировщика увидим, что меняется IP адрес backend**
 
 ![change_ip](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/change_ip_backand.png)
 
 
-## Мониторинг
+### <a id="zabbix">Мониторинг</a>  
 
-установка Zabbix
+**установка Zabbix**
 
 ![install_zabbix](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/install_zabbix.png)
 
@@ -250,46 +265,50 @@ zabbix_srv ansible_host=zabbix.ru-central1.internal
 
 ![zabbix_web](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/zabbix_1.png)
 
-Установка Zabbix-agent
+**Установка Zabbix-agent**
 
 ![install_zabbix_agent](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/install_zabbix_agent.png)
 
-Проверим статус zabbix agenta на двух web серверах
+**Проверим статус zabbix agenta на двух web серверах**
 
 ![zabbix_agent_web1](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/status_zabbix_agent_web1.png)
 
 ![zabbix_agent_web2](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/status_zabbix_agent_web2.png)
 
-Добавляем хосты используя FQDN имена в zabbix сервер и настраиваем дашборды
+**Добавляем хосты используя FQDN имена в zabbix сервер и настраиваем дашборды**
 
 ![active_node](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/active_node_zabbix.png)
 
-И создадим дашборд на который выыедем утилизацию CPU RAM и Uptime
+**И создадим дашборд на который выыедем утилизацию CPU RAM и Uptime**
 
 ![dashbord_zabbix](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/dashbord_zabbix.png)
 
-## ELK
+## Установка стека ELK для сбора логов
+
+### <a id="elastic">Установка Elasticsearch</a>
 
 Теперь установим стек ELK начнем с elasticsearch
 
 ![install_elasicsearch](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/install_elastic.png)
 
-Посмотрим статус сервиса elasticsearch
+**Посмотрим статус сервиса elasticsearch**
 
 ![status_elasicsearch](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/status_elastic.png)
 
-Установим Kibana
+### <a id="kibana">Установка Kibana</a> 
 
 ![install_kibana](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/install_kibana.png)
 
-Проверим статус Kibana
+**Проверим статус Kibana**
 
 ![status_kibana](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/status_kibana.png)
 
-Установим Filebaet на оба web сервера
+### <a id="filebeat">Установка Filebeat</a> 
+
+**Установим Filebaet на оба web сервера**
 
 ![install_filebeat](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/install_filebeat.png)
 
-Проверим в WEB интерефейсе логи с двух web сервером
+**Проверим в WEB интерефейсе логи с двух web сервером**
 
 ![ifilebeat_log](https://github.com/dvolkov15/Diplom_Netology/blob/main/scrin/log_elastic.png)

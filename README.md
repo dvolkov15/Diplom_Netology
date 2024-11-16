@@ -26,8 +26,8 @@
 
 **ссылки на ресурсы**  
 [Сайт](http://84.201.169.22/)  
-[Kibana](http://51.250.104.237:5601/)  
-[Zabbix](http://51.250.29.190/zabbix/)
+[Kibana](http://158.160.16.230:5601/)  
+[Zabbix](http://51.250.28.225/zabbix/zabbix.php?action=dashboard.view)
 
 --- 
 
